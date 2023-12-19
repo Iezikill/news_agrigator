@@ -27,7 +27,7 @@
                 <th scope="col">#ID</th>
                 <th scope="col">Name</th>
                 <th scope="col">Email</th>
-                <th scope="col">Status</th>
+                <th scope="col">Role</th>
 
             </tr>
             </thead>
@@ -37,10 +37,23 @@
                     <td>{{$item->id}}</td>
                     <td>{{$item->name}}</td>
                     <td>{{$item->email}}</td>
-                    <td>{{$item->is_admin}}</td>
+                    <td>
+                        @if($item->is_admin)
+                            Admin
+                        @endif</td>
+                    <td class="d-flex justify-content-center">
+                        @if ($item->is_admin)
+                            <a href="{{ route('admin.toggleAdmin', $item) }}" type="button"
+                               class="btn btn-danger" style="padding-bottom: 8px">Remove Admin</a>
+                        @else
+                            <a href="{{ route('admin.toggleAdmin', $item) }}" type="button"
+                               class="btn btn-success" style="padding-bottom: 9px">Make Admin</a>
+                        @endif
+                    </td>
+
                     <td>{{$item->created_at}}</td>
                     <td>{{$item->updated_at}}</td>
-                    <td style="display: flex">
+                    <td style="display: flex; padding-bottom: 3px;">
                         <a href="{{ route('admin.users.edit', $item) }}" style="margin-top: 3px">
                             Edit
                         </a>
@@ -49,7 +62,7 @@
                             @csrf
                             @method('DELETE')
                             <button class="btn btn-sm"
-                                    style="color: red; text-decoration: underline; font-size: 14px;", type="submit">
+                                    style="color: red; text-decoration: underline; font-size: 14px;" type="submit">
                                 Remove
                             </button>
                             {{--                            <a href="#" style="color: red">Remove</a>--}}

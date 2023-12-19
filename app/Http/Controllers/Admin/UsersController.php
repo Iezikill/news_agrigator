@@ -5,14 +5,13 @@ declare(strict_types=1);
 namespace App\Http\Controllers\Admin;
 
 use App\Http\Controllers\Controller;
-use App\Http\Requests\Admin\Categories\CreateRequest;
-use App\Http\Requests\Admin\Categories\EditRequest;
-use App\Models\EloquentModels\User;
+use App\Models\User;
 use Illuminate\Http\RedirectResponse;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Hash;
-use Illuminate\Support\Facades\Storage;
 use Illuminate\View\View;
+
 class UsersController extends Controller
 {
     /**
@@ -22,14 +21,8 @@ class UsersController extends Controller
 
     public function index(): View
     {
-        /*$categoriesList = DB::table('categories')->get();
-
-        return \view ('blade.admin.category.index', ['categories' => $categoriesList]);*/
-
-        return \view ('blade.admin.users.index', [
-            'users' => User::query()
-                ->get()]);
-
+        $users = User::query()->where('id', '!=', Auth::id())->get();
+        return view('blade.admin.users.index', ['users' => $users]);
     }
 
     /**
@@ -90,6 +83,12 @@ class UsersController extends Controller
         $request->flash();
         $data = $request->only(['name', 'password', 'email', 'is_admin']);
 
+        if(!$data['password'])
+        {
+            unset($data['password']);
+        }
+
+        //dd($data);
 
         $user -> fill($data);
 
@@ -113,6 +112,22 @@ class UsersController extends Controller
         }
         return back()->with('error', 'Failed to remove user');
     }
+
+    public function toggleAdmin(User $user)
+    {
+
+        if ($user->id != Auth::id()) {
+            $user->is_admin = !$user->is_admin;
+            $user->save();
+
+            return redirect()->route('admin.users.index')
+                ->with('success', 'Rights changed');
+        } else {
+            return redirect()->route('admin.users.index')
+                ->with('error', "You can't remove the admin from yourself");
+        }
+    }
+
 
     // -------------- Before DB -----------------------------
 
