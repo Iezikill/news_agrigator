@@ -1,6 +1,6 @@
 <?php
 
-declare(strict_types=1); //строгая типизация
+declare(strict_types=1);
 
 namespace App\Http\Controllers;
 
@@ -14,11 +14,14 @@ class NewsController extends Controller
     {
         return \view('news.index', [
             'news' => $this->getNews(),
-        ]); //хелпер
+        ]);
     }
 
     public function show(int $id)
     {
-        return$this->getNews($id);
+        return \view('news.show', [
+            'news' => $this->getNews($id),
+        ]);
+//        return $this->getNews($id);
     }
 }
