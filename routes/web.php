@@ -1,6 +1,7 @@
 <?php
 
 use App\Http\Controllers\Admin\IndexController as AdminController;
+use App\Http\Controllers\Admin\UsersController as AdminUsersController;
 use App\Http\Controllers\CategoryController;
 use App\Http\Controllers\NewsController;
 use App\Http\Controllers\Admin\NewsController as AdminNewsController;
@@ -67,9 +68,9 @@ Route::get('/info/{project}', static function (string $project): string {
 
 // ---------------------News Aggregator ---------------------------------
 
-Route::get('/', function () {
+/*Route::get('/start', function () {
     return view('blade.welcome');
-    })->name('startPage');
+    })->name('startPage');*/
 
 Route::name('news.')
     ->prefix('news')
@@ -91,17 +92,21 @@ Route::name('news.')
 
 Route:: name('admin.')
     ->prefix('admin')
+    ->middleware(['auth', 'is.admin'])
     ->group(function(){
         Route::get('/', AdminController::class)->name('index');
         Route::resource('categories', AdminCategoryController::class);
         Route::resource('news', AdminNewsController::class);
-
-
+        Route::resource('users', AdminUsersController::class);
 });
+
+
 
 //Route::get('/welcome', [WelcomeController::class, 'index']);
 
 
-/*Auth::routes();
+Auth::routes();
 
-Route::get('/home', [App\Http\Controllers\HomeController::class, 'index'])->name('home');*/
+Route::get('/', [App\Http\Controllers\HomeController::class, 'index'])->name('home');
+
+
