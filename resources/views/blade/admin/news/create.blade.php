@@ -18,20 +18,32 @@
 
 <form method="post" action="{{ route('admin.news.store') }}">
     @csrf
-    <div class="form-group">
+    {{--<div class="form-group">
         <label for="id" class="form-label">#ID</label>
         <input type="text" class="form-control" id="id" name="id" value = "{{old('id')}}">
-    </div><br>
+    </div><br>--}}
 
-    <div class="form-group">
+   {{-- <div class="form-group">
         <label for="category_id" class="form-label">Category_id</label>
         <input type="text" class="form-control" id="category_id" name="category_id" value = "{{old('category_id')}}">
-    </div><br>
+    </div><br>--}}
 
     <div class="form-group">
+        <label for="category" class="form-label">Category</label>
+        <select class="form-select" name="category" id="category">
+            {{--            <option selected>Status</option>--}}
+            @foreach($categories as $item)
+            <option @if(old('category') === $item->name) selected @endif>{{$item->name}}</option>
+            @endforeach
+        </select>
+    </div><br>
+
+
+
+    {{--<div class="form-group">
         <label for="category_name" class="form-label">Category_name</label>
         <input type="text" class="form-control" id="category_name" name="category_name" value = "{{old('category_name')}}">
-    </div><br>
+    </div><br>--}}
 
     <div class="form-group">
         <label for="title" class="form-label">Title</label>
@@ -40,13 +52,14 @@
 
     <div class="form-group">
         <label for="description" class="form-label">Description</label>
-        <input type="text" class="form-control" id="description" name="description" value = "{{old('description')}}">
+        <textarea type="text" class="form-control" id="description" name="description">{{old('description')}}
+        </textarea>
 
     </div><br>
 
     <div class="form-group">
         <label for="text" class="form-label">Text</label>
-        <input type="text" class="form-control" id="text" name="text" value = "{{old('text')}}">
+        <textarea type="text" class="form-control" id="text" name="text">{{old('text')}}</textarea>
 
     </div><br>
 
@@ -66,14 +79,14 @@
         </select>
     </div><br>
 
-    <div class="form-group">
+    {{--<div class="form-group">
         <label for="isPrivate" class="form-label">isPrivate</label>
         <select class="form-select" name="isPrivate" id="isPrivate">
-            {{--            <option selected>Status</option>--}}
+            --}}{{--            <option selected>Status</option>--}}{{--
             <option @if(old('isPrivate') === 'True') selected @endif>True</option>
             <option @if(old('isPrivate') === 'False') selected @endif>False</option>
         </select>
-    </div><br>
+    </div><br>--}}
 
     <div class="form-group">
         <label for="image" class="form-label">Image</label>

@@ -18,14 +18,19 @@
 
     <form method="post" action="{{ route('admin.categories.store') }}">
         @csrf
-        <div class="form-group">
+        {{--<div class="form-group">
             <label for="id" class="form-label">#ID</label>
             <input type="text" class="form-control" id="id" name="id" value = "{{old('id')}}">
-        </div><br>
+        </div><br>--}}
 
         <div class="form-group">
             <label for="name" class="form-label">Name</label>
             <input type="text" class="form-control" id="name" name="name" value = "{{old('name')}}">
+        </div><br>
+
+        <div class="form-group">
+            <label for="description" class="form-label">Description</label>
+            <input type="text" class="form-control" id="description" name="description" value = "{{old('description')}}">
         </div><br>
 
         <div class="form-group">
@@ -37,6 +42,17 @@
             <label for="image" class="form-label">Image</label>
             <input type="url" class="form-control" id="image" name="image" value = "{{old('image')}}">
         </div><br>
+
+        <div class="form-group">
+            <label for="created_at" class="form-label">Created_at</label>
+            <input type="datetime-local" class="form-control" id="created_at" name="created_at" value = "{{old('created_at')}}">
+
+        </div><br>
+
+        {{--<div class="form-group">
+            <label for="image" class="form-label">Image</label>
+            <input type="url" class="form-control" id="image" name="image" value = "{{old('image')}}">
+        </div><br>--}}
 
 
         {{--<div class="mb-3 form-check">
