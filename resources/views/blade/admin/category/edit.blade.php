@@ -18,7 +18,13 @@
 
     @include('inc.message')
 
-    <form method="post" action="{{ route('admin.categories.update', $category) }}">
+   {{-- @if($errors->any())
+        @foreach($errors->all() as $error)
+            <x-alert :message="$error" type="danger"></x-alert>
+        @endforeach
+    @endif--}}
+
+    <form method="post" action="{{ route('admin.categories.update', $category) }}" enctype="multipart/form-data">
         @csrf
         @method('PUT')
         {{--<div class="form-group">
@@ -28,18 +34,29 @@
 
         <div class="form-group">
             <label for="name" class="form-label">Name</label>
-            <input type="text" class="form-control" id="name" name="name" value = "{{old('name') ?? $category->name }}">
+            <input type="text" class="form-control @error('name') is-invalid @enderror"
+                   id="name" name="name" value = "{{old('name') ?? $category->name}}">
+            @error('name') <div id="validationServerUsernameFeedback" class="invalid-feedback">
+                {{$message}}
+            </div>@enderror
         </div><br>
 
         <div class="form-group">
             <label for="description" class="form-label">Description</label>
-            <input type="text" class="form-control" id="description" name="description"
-                   value = "{{old('description') ?? $category->description}}">
+            <input type="text" class="form-control @error('description') is-invalid @enderror"
+                   id="description" name="description" value = "{{old('description') ?? $category->description}}">
+            @error('description') <div id="validationServerUsernameFeedback" class="invalid-feedback">
+                {{$message}}
+            </div>@enderror
         </div><br>
 
         <div class="form-group">
             <label for="slug" class="form-label">Slug</label>
-            <input type="text" class="form-control" id="slug" name="slug" value = "{{old('slug') ?? $category->slug }}">
+            <input type="text" class="form-control @error('slug') is-invalid @enderror"
+                   id="slug" name="slug" value = "{{old('slug') ?? $category->slug}}">
+            @error('slug') <div id="validationServerUsernameFeedback" class="invalid-feedback">
+                {{$message}}
+            </div>@enderror
         </div><br>
 
         {{--<div class="form-group">
@@ -49,15 +66,16 @@
 
         <div class="form-group">
             <label for="image" class="form-label">Image</label>
-            {{--            <img src="{{$item->image}}" width = "100">--}}
-            <input type="file" class="form-control" id="image" name="image" value = "{{old('image') ?? $category->image }}">
+            <img src="{{$category->image}}" width = "100">
+            <input type="file" class="form-control" id="image" name="image">
         </div><br>
 
-        <div class="form-group">
+        {{--<div class="form-group">
             <label for="created_at" class="form-label">Created_at</label>
-            <input type="datetime-local" class="form-control" id="created_at" name="created_at" value = "{{old('created_at') ?? $category->created_at }}">
+            <input type="datetime-local" class="form-control" id="created_at" name="created_at"
+                   value = "{{old('created_at') ?? $category->created_at }}">
 
-        </div><br>
+        </div><br>--}}
 
         {{--<div class="form-group">
             <label for="image" class="form-label">Image</label>

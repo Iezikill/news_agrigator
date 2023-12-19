@@ -42,7 +42,13 @@ class CategoryController extends Controller
             ->where('news.category_id', '=', $categoryId)
             ->get();
 
-        return \view('blade.categories.show')->with(['news' => $news]);
+        $categoryName = Category::query()
+            ->select('categories.*')
+            ->where('categories.id', '=', $categoryId)
+            ->value('name');
+
+//        dd($categoryName);
+        return \view('blade.categories.show')->with(['news' => $news, 'name' => $categoryName]);
 
     }
 

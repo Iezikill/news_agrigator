@@ -6,6 +6,8 @@ namespace App\Http\Controllers\Admin;
 
 use App\Http\Controllers\Controller;
 //use App\Models\Category;
+use App\Http\Requests\Admin\Categories\Create;
+use App\Http\Requests\Admin\Categories\Edit;
 use App\Models\EloquentModels\Category;
 use App\Models\EloquentModels\News;
 use Illuminate\Http\RedirectResponse;
@@ -44,7 +46,7 @@ class CategoryController extends Controller
     /**
      * Store a newly created resource in storage.
      */
-    public function store(Request $request): RedirectResponse
+    public function store(Create $request): RedirectResponse
     {
         /*DB::table('categories')->insert([
             [
@@ -59,18 +61,29 @@ class CategoryController extends Controller
 
         $request->flash();
 
-        $categories = new Category($request->all());
+        //$categories = new Category($request->all());
         //dd($news->fill($request->all()));
 
-        $url = null;
+        $data = $request->only(['name', 'description', 'slug', 'image']);
+        $url = '';
+
+        //$url = null;
 
         if($request->file('image')) {
-            $path = Storage::putFile('public/img', $request->file('image'));
+            $path = Storage::putFile('public/img/photo', $request->file('image'));
             $url = Storage::url($path);
         }
-        $categories->image = $url;
 
-        $categories->fill($request->all())->save();
+        $categories = new Category($data);
+
+        $categories->image = $url;
+        $categories->created_at = now();
+        //dd($categories);
+        $categories->save();
+
+        /*$categories->image = $url;
+
+        $categories->fill($request->all())->save();*/
 
         if($categories->save()) {
             return redirect()->route('admin.categories.index')
@@ -104,9 +117,23 @@ class CategoryController extends Controller
     /**
      * Update the specified resource in storage.
      */
-    public function update(Request $request, Category $category)
+    public function update(Edit $request, Category $category)
     {
-        $data = $request->all();
+        /*$data = $request->all();
+        $category -> fill($data);*/
+
+        $request->flash();
+        $data = $request->only(['name', 'description', 'slug', 'created_at']);
+
+        $url = $category->image;
+
+        if($request->hasFile('image')) {
+            $path = Storage::putFile('public/img/photo', $request->file('image'));
+            $url = Storage::url($path);
+        }
+
+        $category->image = $url;
+        //dd($category);
         $category -> fill($data);
 
         if($category->save()) {
@@ -120,9 +147,13 @@ class CategoryController extends Controller
     /**
      * Remove the specified resource from storage.
      */
-    public function destroy(string $id)
+    public function destroy(Category $category): RedirectResponse
     {
-        //
+
+        if($category->delete()){
+            return redirect()->route('admin.categories.index')->with('success', 'Category successfully removed');
+        }
+        return back()->with('error', 'Failed to remove category');
     }
 
     // -------------- Before DB -----------------------------

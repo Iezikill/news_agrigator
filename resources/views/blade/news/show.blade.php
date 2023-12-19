@@ -9,7 +9,7 @@
         <div class="container">
 {{--            {{dd($news)}};--}}
 {{--            @forelse($news as $item)--}}
-                <img src="{{$news->image}}">
+                <img src="{{$news->image}}" width="200">
                 <h2>{{$news->title}}</h2>
                 <p>Author: {{$news->author }}</p>
                 <p>{{$news->text}}</p>

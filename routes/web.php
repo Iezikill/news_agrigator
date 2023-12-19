@@ -99,7 +99,7 @@ Route:: name('admin.')
 
 });
 
-Route::get('/welcome', [WelcomeController::class, 'index']);
+//Route::get('/welcome', [WelcomeController::class, 'index']);
 
 
 /*Auth::routes();

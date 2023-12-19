@@ -4,15 +4,20 @@ declare(strict_types=1);
 
 namespace App\Http\Controllers\Admin;
 
+use App\Enums\News\Status;
 use App\Http\Controllers\Controller;
 //use App\Http\Controllers\NewsTrait;
 //use App\Models\News;
+use App\Http\Requests\Admin\News\Create;
+use App\Http\Requests\Admin\News\Edit;
 use App\Models\EloquentModels\Category;
 use App\Models\EloquentModels\News;
 use Illuminate\Http\RedirectResponse;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
+use Illuminate\Support\Facades\Log;
 use Illuminate\Support\Facades\Storage;
+use Illuminate\Validation\Rules\Enum;
 use Illuminate\View\View;
 
 class NewsController extends Controller
@@ -43,9 +48,8 @@ class NewsController extends Controller
 //                ->where('status', $request->query('f', 'draft')) - если без SCOPE, status() - закомментировать
                 ->with('category')
                 ->orderByDesc('id')
-                ->paginate(5)->appends($request->query())
-//                ->get(),
-
+                ->paginate(5)
+                ->withQueryString()  //  or ->appends($request->query()
         ]);
     }
 
@@ -63,7 +67,7 @@ class NewsController extends Controller
     /**
      * Store a newly created resource in storage.
      */
-    public function store(Request $request): RedirectResponse
+    public function store(Create $request): RedirectResponse
     {
        /* $categoryName = request('category');
         $categoryId = DB::table('categories')
@@ -87,19 +91,27 @@ class NewsController extends Controller
 
         request()->flash();
 
-        $news = new News($request->all());
-        //dd($news->fill($request->all()));
+        $data = $request->only([
+            'category_id',
+            'title',
+            'author',
+            'status',
+            'description',
+            'text',
+            'image'
+            ]);
 
-
-        $url = null;
+        $url = '';
         if($request->hasFile('image')) {
+
             $path = Storage::putFile('public/img/photo', $request->file('image'));
             $url = Storage::url($path);
-        }
-        dd($request->all());
-        $news->image = $url;
 
-        $news->fill($request->all())->save();
+        }
+        $news = new News($data);
+        $news->created_at = now();
+        $news->image = $url;
+        $news->save();
 
         if($news->save()) {
             return redirect()->route('admin.news.index')
@@ -128,35 +140,74 @@ class NewsController extends Controller
         ['categories' => $categories,
         'news' => $news
         ]);
+
     }
 
     /**
      * Update the specified resource in storage.
      */
-    public function update(Request $request, News $news)
+    public function update(Edit $request, News $news)
     {
         //$request->flash();
-        //return redirect()->route('admin.news.edit', ['news' => $news]);
+        //return redirect()->route('admin.news.edit', ['news' => $news]);s
 
-        $data = $request->all();
+        $data = $request->only([
+            'category_id',
+            'title',
+            'author',
+            'status',
+            'description',
+            'text',
+            'created_at']);
+
+        $url = $news->image;
+
+        if($request->hasFile('image')) {
+
+            $path = Storage::putFile('public/img/photo', $request->file('image'));
+            $url = Storage::url($path);
+
+        }
+
+        //dd($url);
+
+        $news->image = $url;
         $news -> fill($data);
 
         if($news->save()) {
             return redirect()->route('admin.news.index')
-                ->with('success', 'News successfully added');
+                ->with('success', 'News is successfully edited');
         }
 
-        return back()->with('error', 'Failed to add news');
+        return back()->with('error', 'Failed to edit news');
 
     }
 
     /**
      * Remove the specified resource from storage.
      */
-    public function destroy(string $id)
+    public function destroy(News $news)
     {
-        //
+        {
+            try {
+                $news->delete();
+
+                return response()->json('ok');
+
+            } catch (\Exception $e) {
+                Log::error($e->getMessage(), $e->getTrace());
+                return response ()->json('error', 400);
+
+            }
+        }
+
+        /*if($news->delete()){
+            return redirect()->route('admin.news.index')
+                ->with('success', 'News successfully removed');
+        }
+        return back()->with('error', 'Failed to remove news');*/
     }
+
 
 
     //------------ Before DB ---------------------
