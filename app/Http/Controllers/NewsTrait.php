@@ -69,9 +69,11 @@ trait NewsTrait
                     'category_id' => $category_id,
                     'category_name' => $this->getCategory($category_id)['name'],
                     'title' => \fake()->jobTitle(),
+                    'image' => \fake()->imageUrl(),
                     'description' => \fake()->text(100),
                     'author' => \fake()->userName(),
-                    'created_at' => \now()->format('d-m-Y H:i')
+                    'created_at' => \now()->format('d-m-Y H:i'),
+                    'status' => 'ACTIVE'
                 ];
             }
             return $news;
@@ -81,9 +83,11 @@ trait NewsTrait
             $news [] = [
                 'id' => $id,
                 'title' => \fake()->jobTitle(),
-                'description' => \fake()->text(100),
+                'image' => \fake()->imageUrl(),
+                'full_text' => \fake()->text(1000),
                 'author' => \fake()->userName(),
-                'created_at' => \now()->format('d-m-Y H:i')
+                'created_at' => \now()->format('d-m-Y H:i'),
+                'status' => 'ACTIVE'
             ];
             return $news;
         }

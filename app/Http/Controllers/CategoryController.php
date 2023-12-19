@@ -4,35 +4,37 @@ declare(strict_types=1);
 
 namespace App\Http\Controllers;
 
+
 use Illuminate\Http\Request;
+use Illuminate\View\View;
 
 class CategoryController extends Controller
 {
     use NewsTrait;
 
-    public function index()
+    public function index(): View
     {
-        return \view('categories.index', [
-            'categories' => $this->getCategory(),
+        return  \view('blade.categories.index', [
+            'categories' => $this->getCategory()
         ]);
+
+        /*return \view('categories.index', [
+            'categories' => $this->getCategory(),
+        ]);*/
 
         //return $this->getCategory();
     }
 
-    public function show(int $id)
+    public function show(int $id): View
     {
-        return \view('categories.show', [
-            'categories' => $this->getNewsByCategory($id),
+        return  \view('blade.categories.show', [
+            'categories' => $this->getNewsByCategory($id)
         ]);
-//        return $this->getNewsByCategory($id);
-    }
 
-    public function showByName(string $name)
-    {
         /*return \view('categories.show', [
-            'categories' => $this->getNewsByName($name),
+            'categories' => $this->getNewsByCategory($id),
         ]);*/
-       return $this->getNewsByName($name);
+//        return $this->getNewsByCategory($id);
     }
 
 }

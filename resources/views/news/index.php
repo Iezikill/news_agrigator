@@ -2,12 +2,14 @@
     <div style="border: 1px solid green">
         <h2><?=$n['title']?></h2>
         <p><?=$n['description']?></p>
-<!--        <p>--><?php //=$n['category_id']?><!--</p>-->
-        <div> Category
-            <p style = "text-transform: uppercase; margin-top:4px; font-weight: bold">
-                <?=$n['category_name']?></p>
+        <div style = "margin-bottom:16px; font-weight: bold"> Category
+            <a
+               href="<?=route('news.categories', ['id' => $n['category_id']])?>"
+               style = "text-transform: uppercase; margin-top:4px; font-weight: bold">
+                   <?=$n['category_name']?>
+           </a>
         </div>
-        <div><strong><?=$n['author']?> (<?=$n['created_at']?>)</strong></div>
-            <a href="<?=route('news.show', ['id' => $n['id']])?>">Далее</a>
+        <div style = "margin-bottom:6px"><strong><?=$n['author']?> (<?=$n['created_at']?>)</strong></div>
+        <a style = "display:block; margin-bottom:10px" href="<?=route('news.show', ['id' => $n['id']])?>">Далее</a>
     </div>
 <?php endforeach; ?>
