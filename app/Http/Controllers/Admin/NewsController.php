@@ -8,8 +8,8 @@ use App\Enums\News\Status;
 use App\Http\Controllers\Controller;
 //use App\Http\Controllers\NewsTrait;
 //use App\Models\News;
-use App\Http\Requests\Admin\News\Create;
-use App\Http\Requests\Admin\News\Edit;
+use App\Http\Requests\Admin\News\CreateRequest;
+use App\Http\Requests\Admin\News\EditRequest;
 use App\Models\EloquentModels\Category;
 use App\Models\EloquentModels\News;
 use Illuminate\Http\RedirectResponse;
@@ -67,7 +67,7 @@ class NewsController extends Controller
     /**
      * Store a newly created resource in storage.
      */
-    public function store(Create $request): RedirectResponse
+    public function store(CreateRequest $request): RedirectResponse
     {
        /* $categoryName = request('category');
         $categoryId = DB::table('categories')
@@ -103,13 +103,11 @@ class NewsController extends Controller
 
         $url = '';
         if($request->hasFile('image')) {
-
             $path = Storage::putFile('public/img/photo', $request->file('image'));
             $url = Storage::url($path);
-
         }
+
         $news = new News($data);
-        $news->created_at = now();
         $news->image = $url;
         $news->save();
 
@@ -146,7 +144,7 @@ class NewsController extends Controller
     /**
      * Update the specified resource in storage.
      */
-    public function update(Edit $request, News $news)
+    public function update(EditRequest $request, News $news)
     {
         //$request->flash();
         //return redirect()->route('admin.news.edit', ['news' => $news]);s
@@ -158,20 +156,30 @@ class NewsController extends Controller
             'status',
             'description',
             'text',
-            'created_at']);
+            'image']);
 
-        $url = $news->image;
+        //$url = $news->image;
 
         if($request->hasFile('image')) {
 
+            $request->validate([
+                'image' => ['sometimes', 'image', 'mimes:jpeg, bmp, png|max:1500']
+            ]);
+
+            $oldPath = str_replace('storage', 'public', $news->image);
+            Storage::delete($oldPath);
+
             $path = Storage::putFile('public/img/photo', $request->file('image'));
             $url = Storage::url($path);
+            $data['image'] = $url;
 
+            /*Storage::delete($news->image);
+
+            $path = $request->file('image')->store('public/img/photo');
+            $data['image'] = $path;*/
         }
 
-        //dd($url);
-
-        $news->image = $url;
+       //$news->image = $url;
         $news -> fill($data);
 
         if($news->save()) {

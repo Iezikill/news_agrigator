@@ -6,8 +6,8 @@ namespace App\Http\Controllers\Admin;
 
 use App\Http\Controllers\Controller;
 //use App\Models\Category;
-use App\Http\Requests\Admin\Categories\Create;
-use App\Http\Requests\Admin\Categories\Edit;
+use App\Http\Requests\Admin\Categories\CreateRequest;
+use App\Http\Requests\Admin\Categories\EditRequest;
 use App\Models\EloquentModels\Category;
 use App\Models\EloquentModels\News;
 use Illuminate\Http\RedirectResponse;
@@ -46,7 +46,7 @@ class CategoryController extends Controller
     /**
      * Store a newly created resource in storage.
      */
-    public function store(Create $request): RedirectResponse
+    public function store(CreateRequest $request): RedirectResponse
     {
         /*DB::table('categories')->insert([
             [
@@ -117,7 +117,7 @@ class CategoryController extends Controller
     /**
      * Update the specified resource in storage.
      */
-    public function update(Edit $request, Category $category)
+    public function update(EditRequest $request, Category $category)
     {
         /*$data = $request->all();
         $category -> fill($data);*/

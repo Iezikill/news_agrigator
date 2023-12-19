@@ -1,14 +1,13 @@
-@extends('layouts.main')
+@extends('layouts.app')
 @section('title')
     @parent :: News list
 @endsection
 @section('content')
 
-    <section class="py-5 text-center container">
+    <section class="py-5 text-center container" style="padding: 1rem!important;">
         <div class="row py-lg-5">
             <div class="col-lg-6 col-md-8 mx-auto">
                 <h1 class="fw-light">News</h1>
-
             </div>
         </div>
     </section>
