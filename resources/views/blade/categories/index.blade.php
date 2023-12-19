@@ -20,12 +20,12 @@
                 @foreach($categories as $item)
                     <div class="col">
                         <div class="card shadow-sm">
-
+                            <img src="{{$item['image']}}">
                             <div class="card-body">
                                 <h3 style = "text-transform: uppercase; margin:12px 0px"><?=$item['name']?></h3>
                                 <div class="d-flex justify-content-between align-items-center">
                                     <div class="btn-group">
-                                        <a href="<?=route('news.categories', ['id' => $item['id']])?>"
+                                        <a href="<?=route('news.category.show', ['slug' => $item['slug']])?>"
                                            class="btn btn-sm btn-outline-secondary">News
                                         </a>
                                     </div>

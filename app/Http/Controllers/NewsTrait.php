@@ -92,4 +92,6 @@ trait NewsTrait
             return $news;
         }
     }
+
+
 }
