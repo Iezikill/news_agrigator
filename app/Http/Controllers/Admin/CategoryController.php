@@ -5,16 +5,20 @@ declare(strict_types=1);
 namespace App\Http\Controllers\Admin;
 
 use App\Http\Controllers\Controller;
+use App\Models\Category;
 use Illuminate\Http\Request;
+use Illuminate\View\View;
 
 class CategoryController extends Controller
 {
     /**
      * Display a listing of the resource.
      */
-    public function index()
+    public function index(Category $categories): View
     {
-        //
+        $categoriesList = $categories->getCategories();
+        return \view ('blade.admin.category.index', ['categories' => $categoriesList]);
+
     }
 
     /**
@@ -22,7 +26,7 @@ class CategoryController extends Controller
      */
     public function create()
     {
-        //
+        return \view ('blade.admin.category.create');
     }
 
     /**
@@ -30,7 +34,8 @@ class CategoryController extends Controller
      */
     public function store(Request $request)
     {
-        //
+        request()->flash();
+        return redirect()->route('admin.categories.create');
     }
 
     /**
