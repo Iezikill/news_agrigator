@@ -51,15 +51,24 @@
             </div>@enderror
         </div><br>
 
+
+
         <div class="form-group">
             <label for="is_admin" class="form-label">Is Admin</label>
-            <input type="text" class="form-control @error('is_admin') is-invalid @enderror"
+            <select class="form-select" name="is_admin" id="is_admin">
+
+                <option value=0 @selected(old('is_admin', $users->is_admin))>
+                    No</option>
+                <option value=1 @selected(old('is_admin', $users->is_admin))>
+                    Yes</option>
+
+            </select>
+
+           {{-- <input type="text" class="form-control @error('is_admin') is-invalid @enderror"
                    id="is_admin" name="is_admin" value = "{{ old('is_admin') ?? $users->is_admin}}">
             @error('is_admin') <div id="validationServerUsernameFeedback" class="invalid-feedback">
                 {{$message}}
-            </div>@enderror
-
-
+            </div>@enderror--}}
         </div><br>
 
 

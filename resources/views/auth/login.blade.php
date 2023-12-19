@@ -41,6 +41,14 @@
                             </div>
                         </div>
 
+                        @foreach(App\Services\SocialDrivers::getSocialDriverInfo() as $item)
+
+                            <a href="{{ route('social-providers.redirect', $item['driverName']) }}" style="display:block; margin-bottom: 15px; text-decoration: none">
+                                <img src="{{ asset($item['img']) }}" width="50" alt="">
+                                <span style="font-size: 18px; font-weight: 700; padding: 0 10px">Войти через {{$item['name']}}</span></a>
+
+                        @endforeach
+
                         <div class="row mb-3">
                             <div class="col-md-6 offset-md-4">
                                 <div class="form-check">
