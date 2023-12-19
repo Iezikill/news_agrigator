@@ -19,7 +19,7 @@ class CategoryController extends Controller
 {
     public function index(): View
     {
-        $categories = Category::query()->get();
+        $categories = Category::query()->paginate(10);;
 
 //        $categories = DB::table('categories')->get();
 

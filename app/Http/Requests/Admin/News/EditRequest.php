@@ -31,7 +31,7 @@ class EditRequest extends FormRequest
             'author' => ['required', 'string', 'min:2', 'max:100'],
             'status' => ['required', new Enum(Status::class)],
             'description' => ['nullable', 'string'],
-            'text' => ['required', 'string', 'min:10', 'max:100'],
+            'text' => ['required', 'string', 'min:10', 'max:1000'],
         ];
     }
 

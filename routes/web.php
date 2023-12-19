@@ -6,6 +6,7 @@ use App\Http\Controllers\Admin\UsersController as AdminUsersController;
 use App\Http\Controllers\CategoryController;
 use App\Http\Controllers\NewsController;
 use App\Http\Controllers\Admin\NewsController as AdminNewsController;
+use \App\Http\Controllers\Admin\ResourcesController as AdminResourcesController;
 use App\Http\Controllers\Admin\CategoryController as AdminCategoryController;
 use App\Http\Controllers\SocialProvidersController;
 use App\Http\Controllers\WelcomeController;
@@ -103,6 +104,7 @@ Route:: name('admin.')
         Route::resource('categories', AdminCategoryController::class);
         Route::resource('news', AdminNewsController::class);
         Route::resource('users', AdminUsersController::class);
+        Route::resource('resources', AdminResourcesController::class);
 });
 
 Route::group(['middleware' => 'guest'], function () {
@@ -125,4 +127,5 @@ Auth::routes();
 
 Route::get('/', [App\Http\Controllers\HomeController::class, 'index'])->name('home');
 
+Route::post('image-upload', [AdminNewsController::class, 'storeImage'])->name('image.upload');
 

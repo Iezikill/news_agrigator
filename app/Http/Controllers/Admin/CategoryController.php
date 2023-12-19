@@ -29,9 +29,10 @@ class CategoryController extends Controller
 
         return \view ('blade.admin.category.index', ['categories' => $categoriesList]);*/
 
-        return \view ('blade.admin.category.index', [
-            'categories' => Category::query()
-                ->get()]);
+        $categories = Category::query()->paginate(10);
+
+        return view ('blade.admin.category.index')
+            ->with(['categories' => $categories]);
 
     }
 

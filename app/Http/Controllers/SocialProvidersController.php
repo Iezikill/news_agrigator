@@ -12,12 +12,12 @@ use Laravel\Socialite\Facades\Socialite;
 
 class SocialProvidersController extends Controller
 {
-    public function redirect($driver)
+    public function redirect(string $driver)
     {
         return Socialite::driver($driver)->redirect();
     }
 
-    public function callback (Social $social, $driver)
+    public function callback (Social $social, string $driver)
     {
         try {
             $socialUser = Socialite::driver($driver)->user();
