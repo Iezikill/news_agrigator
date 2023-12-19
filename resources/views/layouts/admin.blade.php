@@ -14,6 +14,8 @@
 
     <link href="{{asset('assets/bootstrap.min.css')}}" rel="stylesheet">
     <script src="{{asset('assets/bootstrap.bundle.min.js')}}"></script>
+{{--    <script src="https://cdn.ckeditor.com/ckeditor5/40.0.0/classic/ckeditor.js"></script>--}}
+    <script src="{{asset('assets/vendor/ckeditor5/build/ckeditor.js')}}"></script>
 
     {{--<!-- Favicons -->
     <link rel="apple-touch-icon" href="/docs/5.3/assets/img/favicons/apple-touch-icon.png" sizes="180x180">
@@ -272,6 +274,7 @@
 
             </div>
         </div>
+    @stack('js')
     </body>
 </html>
 

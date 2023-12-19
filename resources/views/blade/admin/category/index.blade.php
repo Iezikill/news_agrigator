@@ -61,6 +61,9 @@
             @endforelse
             </tbody>
         </table>
+        <div style="padding-right: 65px">
+            {{ $categories->links() }}
+        </div>
     </div>
 
 

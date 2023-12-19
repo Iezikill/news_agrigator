@@ -23,7 +23,7 @@
                             <img src="{{$item->image}}">
                             <div class="card-body">
                                 <p><strong>{{$item->title}}</strong></p>
-                                <p class="card-text">{{$item->description}}</p>
+                                <p class="card-text">{!!$item->description!!}</p>
                                 <div style = "margin-bottom:16px; font-weight: bold"> Category
                                     <a
                                         href="<?=route('news.category.show', ['slug' => $item->category->name])?>"

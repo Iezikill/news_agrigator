@@ -11,8 +11,11 @@
 {{--            @forelse($news as $item)--}}
                 <img src="{{$news->image}}" width="200">
                 <h2>{{$news->title}}</h2>
+                <p>{!! $news->description !!}</p>
                 <p>Author: {{$news->author }}</p>
-                <p>{{$news->text}}</p>
+{{--                <p>{{$news->text}}</p>--}}
+                <a href="{{$news->text}}">Перейти к новости</a><br><br>
+                <h5>Category</h5>
                 <a
                     href="<?=route('news.category.show', ['slug' => $news->category->name])?>"
                     style = "display: block; text-transform: uppercase; text-decoration: none;

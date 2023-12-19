@@ -45,7 +45,7 @@
 
                             <a href="{{ route('social-providers.redirect', $item['driverName']) }}" style="display:block; margin-bottom: 15px; text-decoration: none">
                                 <img src="{{ asset($item['img']) }}" width="50" alt="">
-                                <span style="font-size: 18px; font-weight: 700; padding: 0 10px">Войти через {{$item['name']}}</span></a>
+                                <span style="font-size: 14px; font-weight: 700; padding: 0 10px">Войти через {{$item['name']}}</span></a>
 
                         @endforeach
 

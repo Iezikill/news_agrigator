@@ -44,9 +44,9 @@
                     </a>
                 </li>
                 <li class="nav-item">
-                    <a class="nav-link d-flex align-items-center gap-2" href="#">
+                    <a class="nav-link d-flex align-items-center gap-2" href="{{ route('admin.resources.index') }}">
                         <svg class="bi"><use xlink:href="#resourses"/></svg>
-                       Resourses
+                       Resources
                     </a>
                 </li>
                 <li class="nav-item">

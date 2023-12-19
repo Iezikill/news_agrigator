@@ -18,8 +18,8 @@ return new class extends Migration
                 ->constrained('categories')
                 ->cascadeOnDelete();
             $table->string('title');
-            $table->string('author',100);
-            $table->string('description');
+            $table->string('author')->nullable();
+            $table->longText('description');
             $table->string('text');
             $table->string('image')->nullable();
             $table->enum('status', Status::getEnums());

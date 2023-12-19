@@ -2,6 +2,9 @@
 
 namespace App\Services;
 
+use App\Enums\News\Status;
+use App\Models\EloquentModels\Category;
+use App\Models\EloquentModels\News;
 use App\Services\Interfaces\Parser;
 use Orchestra\Parser\Xml\Facade as XmlParser;
 
@@ -39,20 +42,26 @@ class ParserService implements Parser
             ],
         ]);
 
-        $allNews = $this->getAllNews($data);
+        foreach ($data['news'] as $news){
+            $category = Category::query()->firstOrCreate([
+                'name' => $news['category'],
+                'slug' => $news['category'],
+            ]);
+            News::query()->firstOrCreate([
+                'title' => $news['title'],
+                'description' => $news['description'],
+                'text' => $news['link'],
+                'author' => $news['author'],
+                'image' => $news['enclosure::url'],
+                'category_id' => $category->id,
+                'status' => Status::ACTIVE->value,
 
-    }
-
-    private function getAllNews($data): array
-    {
-        $newsArray = [];
-
-        foreach ($data['news'] as $item => $news) {
-            $newsArray[] = $news;
+            ]);
         }
 
-        return $newsArray;
 
     }
+
+
 }
 

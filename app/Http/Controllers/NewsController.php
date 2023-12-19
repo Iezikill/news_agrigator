@@ -20,7 +20,8 @@ class NewsController extends Controller
     {
         $news = News::query()
             ->with('category')
-            ->paginate(3);
+            ->orderByDesc('id')
+            ->paginate(12);
 //        dump($news);
 //        $news = DB::table('news')->get();
         /*$news = DB::table('news')
