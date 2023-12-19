@@ -7,7 +7,8 @@
     <section class="py-5 text-center container">
         <div class="row py-lg-5">
             <div class="col-lg-6 col-md-8 mx-auto">
-                <h1 class="fw-light">{{$news[0]->category->name}} news</h1>
+
+                <h1 class="fw-light">{{$name}} news</h1>
 
             </div>
         </div>

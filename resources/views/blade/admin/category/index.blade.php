@@ -38,7 +38,21 @@
                     <td>{{$item->name}}</td>
                     <td>{{$item->slug}}</td>
                     <td>{{$item->image}}</td>
-                    <td><a href="{{ route('admin.categories.edit', $item) }}">Edit</a> | <a href="#" style="color: red">Remove</a></td>
+                    <td style="display: flex">
+                        <a href="{{ route('admin.categories.edit', $item) }}" style="margin-top: 5px">
+                            Edit
+                        </a>
+                        <form style="margin: 0 15px 5px;" method="POST" enctype="multipart/form-data"
+                              action="{{route('admin.categories.destroy', $item)}}">
+                            @csrf
+                            @method('DELETE')
+                            <button class="btn btn-sm" style="color: red; text-decoration: underline", type="submit">
+                                Remove
+                            </button>
+                            {{--                            <a href="#" style="color: red">Remove</a>--}}
+                        </form>
+{{--                        <a href="#" style="color: red">Remove</a>--}}
+                    </td>
                 </tr>
             @empty
                 <tr>

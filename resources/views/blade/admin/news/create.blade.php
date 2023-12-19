@@ -15,11 +15,19 @@
         </button>--}}
     </div>
 </div>
-
+{{--@dd($errors);--}}
 @include('inc.message')
 
-<form method="post" action="{{ route('admin.news.store') }}">
+{{--@if($errors->any())
+    @foreach($errors->all() as $error)
+        <x-alert :message="$error" type="danger"></x-alert>
+
+    @endforeach
+@endif--}}
+
+<form method="post" action="{{ route('admin.news.store') }}" style="margin-bottom: 100px" enctype="multipart/form-data">
     @csrf
+
     {{--<div class="form-group">
         <label for="id" class="form-label">#ID</label>
         <input type="text" class="form-control" id="id" name="id" value = "{{old('id')}}">
@@ -41,8 +49,6 @@
         </select>
     </div><br>
 
-
-
     {{--<div class="form-group">
         <label for="category_name" class="form-label">Category_name</label>
         <input type="text" class="form-control" id="category_name" name="category_name" value = "{{old('category_name')}}">
@@ -50,7 +56,11 @@
 
     <div class="form-group">
         <label for="title" class="form-label">Title</label>
-        <input type="text" class="form-control" id="title" name="title" value = "{{old('title')}}">
+        <input type="text" class="form-control  @error('title') is-invalid @enderror"
+               id="title" name="title" value = "{{old('title')}}">
+        @error('title') <div id="validationServerUsernameFeedback" class="invalid-feedback">
+            {{$message}}
+        </div>@enderror
     </div><br>
 
     <div class="form-group">
@@ -62,23 +72,29 @@
 
     <div class="form-group">
         <label for="text" class="form-label">Text</label>
-        <textarea type="text" class="form-control" id="text" name="text">{{old('text')}}</textarea>
+        <textarea type="text" class="form-control @error('text') is-invalid @enderror"
+                  id="text" name="text">
+            {{old('text')}}
+        </textarea>
+        @error('text') <div id="validationServerUsernameFeedback" class="invalid-feedback">
+            {{$message}}
+        </div>@enderror
 
     </div><br>
 
-    <div class="form-group">
+    {{--<div class="form-group">
         <label for="created_at" class="form-label">Created_at</label>
         <input type="datetime-local" class="form-control" id="created_at" name="created_at" value = "{{old('created_at')}}">
 
-    </div><br>
+    </div><br>--}}
 
     <div class="form-group">
         <label for="status" class="form-label">Status</label>
         <select class="form-select" name="status" id="status">
             {{--            <option selected>Status</option>--}}
-            <option @if(old('status') === 'Draft') selected @endif>Draft</option>
-            <option @if(old('status') === 'Active') selected @endif>Active</option>
-            <option @if(old('status') === 'Blocked') selected @endif>Blocked</option>
+            <option @selected(old('status') === 'Draft')>Draft</option>
+            <option @selected(old('status') === 'Active')>Active</option>
+            <option @selected(old('status') === 'Blocked')>Blocked</option>
         </select>
     </div><br>
 
@@ -99,14 +115,18 @@
 
     <div class="form-group">
         <label for="author" class="form-label">Author</label>
-        <input type="text" class="form-control" id="title" name="author" value = "{{old('author')}}">
+        <input type="text" class="form-control @error('text') is-invalid @enderror"
+               id="author" name="author" value = "{{old('author')}}">
+        @error('author') <div id="validationServerUsernameFeedback" class="invalid-feedback">
+            {{$message}}
+        </div>@enderror
     </div><br>
-
+    <button type="submit" class="btn btn-primary">Save</button><br>
 
     {{--<div class="mb-3 form-check">
         <input type="checkbox" class="form-check-input" id="exampleCheck1">
         <label class="form-check-label" for="exampleCheck1">Check me out</label>
     </div>--}}
-    <button type="submit" class="btn btn-primary">Save</button><br>
+
 </form>
 @endsection

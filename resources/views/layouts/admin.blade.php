@@ -5,7 +5,7 @@
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1">
     <title>@section('title') Admin panel @show </title>
-
+    <meta name="csrf-token" content="{{ csrf_token() }}">
     <!-- Bootstrap core CSS -->
     <link href = "{{asset ('assets/css/bootstrap.min.css')}}" rel="stylesheet">
 

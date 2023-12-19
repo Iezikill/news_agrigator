@@ -18,7 +18,14 @@
 
     @include('inc.message')
 
-    <form method="post" action="{{ route('admin.news.update', $news) }}">
+   {{-- @if($errors->any())
+        @foreach($errors->all() as $error)
+            <x-alert :message="$error" type="danger"></x-alert>
+
+        @endforeach
+    @endif--}}
+
+    <form method="post" action="{{ route('admin.news.update', $news) }}" enctype="multipart/form-data">
         @csrf
         @method('PUT')
         {{--<div class="form-group">
@@ -49,7 +56,11 @@
 
         <div class="form-group">
             <label for="title" class="form-label">Title</label>
-            <input type="text" class="form-control" id="title" name="title" value = "{{old('title') ?? $news->title}}">
+            <input type="text" class="form-control  @error('title') is-invalid @enderror"
+                   id="title" name="title" value = "{{old('title') ?? $news->title}}">
+            @error('title') <div id="validationServerUsernameFeedback" class="invalid-feedback">
+                {{$message}}
+            </div>@enderror
         </div><br>
 
         <div class="form-group">
@@ -62,16 +73,20 @@
 
         <div class="form-group">
             <label for="text" class="form-label">Text</label>
-            <textarea type="text" class="form-control" id="text" name="text">{{old('text') ?? $news->text}}</textarea>
+            <textarea type="text" class="form-control @error('text') is-invalid @enderror"
+                      id="text" name="text">{{old('text') ?? $news->text}}</textarea>
+            @error('text') <div id="validationServerUsernameFeedback" class="invalid-feedback">
+                {{$message}}
+            </div>@enderror
 
         </div><br>
 
-        <div class="form-group">
+       {{-- <div class="form-group">
             <label for="created_at" class="form-label">Created_at</label>
             <input type="datetime-local" class="form-control" id="created_at" name="created_at"
                    value = "{{old('created_at') ?? $news->created_at}}">
 
-        </div><br>
+        </div><br>--}}
 
         <div class="form-group">
             <label for="status" class="form-label">Status</label>
@@ -111,7 +126,11 @@
 
         <div class="form-group">
             <label for="author" class="form-label">Author</label>
-            <input type="text" class="form-control" id="title" name="author" value = "{{old('author') ?? $news->author}}">
+            <input type="text" class="form-control @error('author') is-invalid @enderror"
+                   id="author" name="author" value = "{{old('author') ?? $news->author}}">
+            @error('author') <div id="validationServerUsernameFeedback" class="invalid-feedback">
+                {{$message}}
+            </div>@enderror
         </div><br>
 
 
