@@ -6,8 +6,10 @@ namespace App\Http\Controllers;
 
 
 
-use App\Models\Category;
-use App\Models\News;
+//use App\Models\Category;
+use App\Models\EloquentModels\Category;
+use App\Models\EloquentModels\News;
+//use App\Models\News;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
 use Illuminate\View\View;
@@ -17,7 +19,9 @@ class CategoryController extends Controller
 {
     public function index(): View
     {
-        $categories = DB::table('categories')->get();
+        $categories = Category::query()->get();
+
+//        $categories = DB::table('categories')->get();
 
         return view('blade.categories.index')->with(['categories' => $categories]);
     }
@@ -25,15 +29,16 @@ class CategoryController extends Controller
     public function show(string $slug ): View
     {
         //dd($slug);
-        $categoryId = DB::table('categories')
+        $categoryId = Category::query()
             ->select('categories.*')
-            ->where('categories.slug', '=', $slug . '.')
+            ->where('categories.slug', '=', $slug)
             ->value('id');
 
 
-        $news = DB::table('news')
-            ->join('categories', 'categories.id','=', 'news.category_id')
-            ->select('news.*', 'categories.name as category_name')
+        $news = News::query()
+            ->with('category')
+            /*->join('categories', 'categories.id','=', 'news.category_id')
+            ->select('news.*', 'categories.name as category_name')*/
             ->where('news.category_id', '=', $categoryId)
             ->get();
 

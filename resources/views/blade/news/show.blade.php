@@ -7,19 +7,23 @@
 
     <div class="album py-5 bg-light">
         <div class="container">
-
-                <img src="{{ $news->image}}">
-                <h2>{{ $news->title}}</h2>
-                <p>Author: {{ $news->author }}</p>
-                <p>{{ $news->text}}</p>
+{{--            {{dd($news)}};--}}
+{{--            @forelse($news as $item)--}}
+                <img src="{{$news->image}}">
+                <h2>{{$news->title}}</h2>
+                <p>Author: {{$news->author }}</p>
+                <p>{{$news->text}}</p>
                 <a
-                    href="<?=route('news.category.show', ['slug' => $news->category_id])?>"
+                    href="<?=route('news.category.show', ['slug' => $news->category->name])?>"
                     style = "display: block; text-transform: uppercase; text-decoration: none;
                                     margin-top:4px; font-weight: bold">
-                        <?=$news->category_id?>
+                        <?=$news->category->name?>
                 </a><br>
-                <p>{{ $news->created_at }}</p>
-                <p>{{ $news->status }}</p>
+                <p>{{$news->created_at}}</p>
+                <p>{{$news->status}}</p>
+{{--            @empty--}}
+{{--                <h2>No news</h2>--}}
+{{--            @endforelse--}}
 
         </div>
     </div>

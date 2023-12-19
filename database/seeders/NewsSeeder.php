@@ -31,7 +31,7 @@ class NewsSeeder extends Seeder
                 'description' => fake()->text(50),
                 'text' => fake()->text(200),
                 'image' => fake()->imageUrl(200, 150),
-                'status' => Status::ACTIVE->value,
+                'status' => fake()->randomElement(Status::getEnums()),
                 'created_at' => now()
             ];
         }

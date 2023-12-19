@@ -19,6 +19,13 @@
 
     {{--    <h2>Section title</h2>--}}
     <div class="table-responsive">
+        @include('inc.message')
+        <select id="filter">
+            <option>selected</option>
+            <option>{{\App\Enums\News\Status::DRAFT->value}}</option>
+            <option>{{\App\Enums\News\Status::ACTIVE->value}}</option>
+            <option>{{\App\Enums\News\Status::BLOCKED->value}}</option>
+        </select>
         <table class="table table-striped table-sm">
             <thead>
             <tr>
@@ -33,16 +40,18 @@
             </tr>
             </thead>
             <tbody>
+{{--            {{dd($news)}}--}}
             @forelse($news as $item)
+
                 <tr>
                     <td>{{$item->id}}</td>
                     <td>{{$item->category_id}}</td>
-                    <td>{{$item->category_name}}</td>
+                    <td>{{$item->category->name}}</td>
                     <td>{{$item->title}}</td>
                     <td>{{$item->author}}</td>
                     <td>{{$item->status}}</td>
                     <td>{{$item->created_at}}</td>
-                    <td><a href="#">Edit</a> | <a href="#" style="color: red">Remove</a></td>
+                    <td><a href="{{ route('admin.news.edit', $item) }}">Edit</a> | <a href="#" style="color: red">Remove</a></td>
                 </tr>
             @empty
                 <tr>
@@ -51,6 +60,7 @@
             @endforelse
             </tbody>
         </table>
+        {{ $news->links() }}
     </div>
 
 
@@ -106,3 +116,14 @@
     </div>--}}
 
 @endsection
+
+@push('js')
+    <script>
+    document.addEventListener("DOMContentLoaded", function (){
+        let filter = document.getElementById("filter");
+        filter.addEventListener("change", function(event) {
+            location.href = '?f=' + this.value;
+        });
+    });
+    </script>
+@endpush
