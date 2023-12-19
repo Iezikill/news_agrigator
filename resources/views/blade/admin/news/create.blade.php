@@ -16,6 +16,8 @@
     </div>
 </div>
 
+@include('inc.message')
+
 <form method="post" action="{{ route('admin.news.store') }}">
     @csrf
     {{--<div class="form-group">
@@ -29,11 +31,12 @@
     </div><br>--}}
 
     <div class="form-group">
-        <label for="category" class="form-label">Category</label>
-        <select class="form-select" name="category" id="category">
+        <label for="category_id" class="form-label">Category</label>
+        <select class="form-select" name="category_id" id="category_id">
             {{--            <option selected>Status</option>--}}
+
             @foreach($categories as $item)
-            <option @if(old('category') === $item->name) selected @endif>{{$item->name}}</option>
+            <option value="{{$item->id}}" @selected(old('category_id') == $item->id)>{{$item->name}}</option>
             @endforeach
         </select>
     </div><br>
@@ -90,7 +93,8 @@
 
     <div class="form-group">
         <label for="image" class="form-label">Image</label>
-        <input type="url" class="form-control" id="image" name="image" value = "{{old('image')}}">
+{{--        <img src="{{$item->image}}" width = "100">--}}
+        <input type="file" class="form-control" id="image" name="image">
     </div><br>
 
     <div class="form-group">

@@ -10,8 +10,8 @@
             </button>--}}
         </div>
     </div>
-
-    <x-alert :type="request()->query('t', 'light')" message="Some alert a message"></x-alert>
+    @include('inc.message')
+    <x-alert :type="request()->query('type', 'info')" message="Some alert a message"></x-alert>
     <x-alert type="danger" message="Some alert a message"></x-alert>
     <x-alert type="info" message="Some alert a message"></x-alert>
     <x-alert type="success" message="Some alert a message"></x-alert>

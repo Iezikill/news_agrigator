@@ -13,6 +13,7 @@
                     <ul class="list-unstyled">
                         <li><a href="<?=route('news.index')?>" class="text-white">News</a></li>
                         <li><a href="<?=route('news.category.index')?>" class="text-white">News Categories</a></li>
+                        <li><a href="<?=route('admin.index')?>" class="text-white">Admin panel</a></li>
 <!--                        <li><a href="#" class="text-white">Email me</a></li>-->
                     </ul>
                 </div>

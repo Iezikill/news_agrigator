@@ -18,7 +18,7 @@ class CategorySeeder extends Seeder
 
     public function getData(): array
     {
-        $quantityCategories = 5;
+        /*$quantityCategories = 5;
         $categories = [];
 
         for ($i = 0; $i < $quantityCategories; $i++) {
@@ -32,7 +32,47 @@ class CategorySeeder extends Seeder
                 'image' => fake()->imageUrl(200, 150),
                 'created_at' => now()
             ];
-        }
-        return $categories;
+        }*/
+        return [
+            [
+                'name' => 'Sport',
+                'description' => 'News about sport',
+                'slug' => 'Sport',
+                'image' => fake()->imageUrl(200, 150),
+                'created_at' => now()
+            ],
+
+            [
+                'name' => 'Politic',
+                'description' => 'News about politic',
+                'slug' => 'Politic',
+                'image' => fake()->imageUrl(200, 150),
+                'created_at' => now()
+            ],
+
+            [
+                'name' => 'Business',
+                'description' => 'News about business',
+                'slug' => 'Business',
+                'image' => fake()->imageUrl(200, 150),
+                'created_at' => now()
+            ],
+
+            [
+                'name' => 'Life',
+                'description' => 'News about life',
+                'slug' => 'Life',
+                'image' => fake()->imageUrl(200, 150),
+                'created_at' => now()
+            ],
+
+            [
+                'name' => 'Science',
+                'description' => 'News about science',
+                'slug' => 'Science',
+                'image' => fake()->imageUrl(200, 150),
+                'created_at' => now()
+            ],
+        ];
     }
 }

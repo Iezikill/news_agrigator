@@ -19,6 +19,7 @@
 
     {{--    <h2>Section title</h2>--}}
     <div class="table-responsive">
+        @include('inc.message')
         <table class="table table-striped table-sm">
             <thead>
             <tr>
@@ -36,8 +37,8 @@
                     <td>{{$item->id}}</td>
                     <td>{{$item->name}}</td>
                     <td>{{$item->slug}}</td>
-{{--                    <td>{{$item->image}}</td>--}}
-                    <td><a href="#">Edit</a> | <a href="#" style="color: red">Remove</a></td>
+                    <td>{{$item->image}}</td>
+                    <td><a href="{{ route('admin.categories.edit', $item) }}">Edit</a> | <a href="#" style="color: red">Remove</a></td>
                 </tr>
             @empty
                 <tr>
